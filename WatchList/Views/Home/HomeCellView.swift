@@ -73,5 +73,5 @@ struct HomeCellView: View {
 }
 
 #Preview {
-    HomeCellView(movieDetails: MovieResults(id: 0, adult: false, backdropPath: "", genreIDs: [], originalLanguage: "en", originalTitle: "Thunderbolts", overview: "", popularity: 0.0, posterPath: "/m9EtP1Yrzv6v7dMaC9mRaGhd1um.jpg", releaseDate: "2025-02-08", title: "Thunderbolts", video: false, voteAverage: 8.2789, voteCount: 0))
+    HomeCellView(movieDetails: MovieResults(id: 0, adult: false, backdropPath: "", originalLanguage: "en", originalTitle: "Thunderbolts", overview: "", popularity: 0.0, posterPath: "/m9EtP1Yrzv6v7dMaC9mRaGhd1um.jpg", releaseDate: "2025-02-08", title: "Thunderbolts", video: false, voteAverage: 8.2789, voteCount: 0))
 }

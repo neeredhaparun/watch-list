@@ -35,7 +35,7 @@ struct MovieResults : Codable, Identifiable {
     let id: Int
     let adult: Bool?
     let backdropPath: String?
-    let genreIDs: [Int]?
+//    let genreIDs: [Int]?
     let originalLanguage: String?
     let originalTitle: String?
     let overview: String?
@@ -50,7 +50,7 @@ struct MovieResults : Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case id, adult
         case backdropPath = "backdrop_path"
-        case genreIDs = "genre_ids"
+//        case genreIDs = "genre_ids"
         case originalLanguage = "original_language"
         case originalTitle = "original_title"
         case overview, popularity

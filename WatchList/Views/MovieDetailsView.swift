@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct MovieDetailsView: View {
+    
+    @Environment(\.managedObjectContext) private var viewContext
     
     @Environment(\.presentationMode) var presentationMode
     @State var movieDetails: MovieResults
@@ -40,10 +43,8 @@ struct MovieDetailsView: View {
                         .frame(height: 100)
                         Button(action: {
                             withAnimation(.easeIn(duration: 0.2)) {
-                                isFavorite.toggle()
+                                toggleFavorite()
                             }
-                            
-                            print("Add or remove from favorites")
                         }) {
                             Image(systemName: isFavorite ? "heart.fill" : "heart")
                                 .font(.title)
@@ -138,10 +139,63 @@ struct MovieDetailsView: View {
         .onAppear {
             moviePosterPath = movieDetails.posterPath ?? ""
             movieBackdropPath = movieDetails.backdropPath ?? ""
+            checkIfFavorite()
         }
     }
+    
+    func checkIfFavorite() {
+        let fetchRequest: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %d", movieDetails.id)
+
+        do {
+            let result = try viewContext.fetch(fetchRequest)
+            isFavorite = !result.isEmpty
+        } catch {
+            print("Failed to fetch favorite: \(error)")
+        }
+    }
+    func toggleFavorite() {
+        if isFavorite {
+            // Remove from Core Data
+            let fetchRequest: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %d", movieDetails.id)
+
+            do {
+                let result = try viewContext.fetch(fetchRequest)
+                for obj in result {
+                    viewContext.delete(obj)
+                }
+                try viewContext.save()
+                isFavorite = false
+            } catch {
+                print("Failed to remove favorite: \(error)")
+            }
+        } else {
+            // Add to Core Data
+            let favorite = FavoriteMovie(context: viewContext)
+            favorite.id = Int64(movieDetails.id)
+            favorite.title = movieDetails.title ?? ""
+            favorite.posterPath = movieDetails.posterPath ?? ""
+            favorite.backdropPath = movieDetails.backdropPath ?? ""
+            favorite.originalTitle = movieDetails.originalTitle ?? ""
+            favorite.releaseDate = movieDetails.releaseDate ?? ""
+            favorite.voteAverage = movieDetails.voteAverage ?? 0.0
+            
+            print("adfsadsads 22312 ===>>> \(movieDetails)")
+
+            do {
+                try viewContext.save()
+                let fav = FavoriteMovie(context: viewContext)
+                print("adfsadsads in MOVIE DEATILS ==== \(fav)")
+                isFavorite = true
+            } catch {
+                print("Failed to save favorite: \(error)")
+            }
+        }
+    }
+
 }
 
 #Preview {
-    MovieDetailsView(movieDetails: MovieResults(id: 0, adult: false, backdropPath: "", genreIDs: [], originalLanguage: "", originalTitle: "", overview: "", popularity: 0.0, posterPath: "", releaseDate: "", title: "", video: false, voteAverage: 0.0, voteCount: 0))
+    MovieDetailsView(movieDetails: MovieResults(id: 0, adult: false, backdropPath: "", originalLanguage: "", originalTitle: "", overview: "", popularity: 0.0, posterPath: "", releaseDate: "", title: "", video: false, voteAverage: 0.0, voteCount: 0))
 }

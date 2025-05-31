@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct FavoritesCellView: View {
+    
+    @State var movieDetails: MovieResults
+    
     var body: some View {
         ZStack(alignment: .leading) {
             HStack(alignment: .center){
@@ -17,20 +20,20 @@ struct FavoritesCellView: View {
                     .frame(height: 150)
                     .cornerRadius(10)
                 VStack(alignment: .leading){
-                    Text("Title of the movie")
+                    Text(movieDetails.originalTitle ?? "")
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundStyle(Color.black)
                     HStack{
                         VStack(alignment: .leading){
-                            Text("English")
+                            Text(movieDetails.originalLanguage ?? "")
                                 .fontWeight(.medium)
-                            Text("20/05/2024")
+                            Text(movieDetails.releaseDate ?? "")
                                 .fontWeight(.medium)
                         }
                         .foregroundStyle(Color.gray)
                         Spacer()
-                        RatingCircleView(rating: 9)
+                        RatingCircleView(rating: movieDetails.voteAverage ?? 0.0)
                             .padding(.trailing)
                     }
                 }
@@ -42,6 +45,9 @@ struct FavoritesCellView: View {
         .background(Color.white)
         .cornerRadius(10)
         .shadow(radius: 5)
+        .onAppear {
+            print("adfsadsads ==== \(movieDetails)")
+        }
     }
 }
 
@@ -78,5 +84,5 @@ struct RatingCircleView: View {
 
 
 #Preview {
-    FavoritesCellView()
+    FavoritesCellView(movieDetails: MovieResults(id: 0, adult: false, backdropPath: "", originalLanguage: "", originalTitle: "", overview: "", popularity: 0.0, posterPath: "", releaseDate: "", title: "", video: false, voteAverage: 0.0, voteCount: 0))
 }
