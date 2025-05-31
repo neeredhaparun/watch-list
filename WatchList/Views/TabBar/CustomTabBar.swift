@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum Tab: String, CaseIterable {
-    case house
-    case heart
-}
-
 struct CustomTabBar: View {
     
     @Binding var selectedTab: Tab

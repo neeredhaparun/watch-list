@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TabBar: View {
-    
     @State var selectedTab: Tab = .house
     
     init() {
@@ -19,12 +18,18 @@ struct TabBar: View {
         ZStack{
             VStack{
                 TabView(selection: $selectedTab) {
-                    NavigationView{
+//                    NavigationView{
+//                        Home()
+//                            .tag(Tab.house)
+//                    }
+                    NavigationView {
                         Home()
-                            .tag(Tab.house)
                     }
-                    Favorites()
-                        .tag(Tab.heart)
+                    .tag(Tab.house)
+                    NavigationView {
+                        Favorites()
+                    }
+                    .tag(Tab.heart)
                 }
             }
             VStack{

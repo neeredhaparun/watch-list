@@ -10,6 +10,16 @@ import SwiftUI
 struct Home: View {
     
     @State var searchText: String = ""
+    @StateObject private var homeVM = HomeViewModel()
+    var filteredMovies: [MovieResults] {
+        if searchText.isEmpty {
+            return homeVM.movies
+        } else {
+            return homeVM.movies.filter {
+                $0.originalTitle?.lowercased().hasPrefix(searchText.lowercased()) ?? false
+            }
+        }
+    }
 
     var body: some View {
         VStack(alignment: .leading){
@@ -43,13 +53,11 @@ struct Home: View {
             
             ScrollView(showsIndicators: false){
                 VStack{
-                    ForEach(0..<5){ index in
-//                        HomeCellView()
-                        NavigationLink(destination: MovieDetailsView()) {
-                            HomeCellView()
+                    ForEach(filteredMovies) { movie in
+                        NavigationLink(destination: MovieDetailsView(movieDetails: movie)) {
+                            HomeCellView(movieDetails: movie)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        
                     }
                 }
                 .padding(.horizontal, 15)
@@ -57,6 +65,9 @@ struct Home: View {
             }
         }
         .padding(.bottom, 20)
+        .onAppear {
+            homeVM.getMovies()
+        }
     }
 }
 
