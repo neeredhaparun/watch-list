@@ -174,19 +174,22 @@ struct MovieDetailsView: View {
             // Add to Core Data
             let favorite = FavoriteMovie(context: viewContext)
             favorite.id = Int64(movieDetails.id)
-            favorite.title = movieDetails.title ?? ""
-            favorite.posterPath = movieDetails.posterPath ?? ""
+            favorite.adult = movieDetails.adult ?? false
             favorite.backdropPath = movieDetails.backdropPath ?? ""
+            favorite.originalLanguage = movieDetails.originalLanguage
             favorite.originalTitle = movieDetails.originalTitle ?? ""
+            favorite.overview = movieDetails.overview
+            favorite.popularity = movieDetails.popularity ?? 0.0
+            favorite.posterPath = movieDetails.posterPath ?? ""
             favorite.releaseDate = movieDetails.releaseDate ?? ""
+            favorite.title = movieDetails.title ?? ""
+            favorite.video = movieDetails.video ?? false
             favorite.voteAverage = movieDetails.voteAverage ?? 0.0
+            favorite.voteCount = Int64(movieDetails.voteCount ?? 0)
             
-            print("adfsadsads 22312 ===>>> \(movieDetails)")
 
             do {
                 try viewContext.save()
-                let fav = FavoriteMovie(context: viewContext)
-                print("adfsadsads in MOVIE DEATILS ==== \(fav)")
                 isFavorite = true
             } catch {
                 print("Failed to save favorite: \(error)")

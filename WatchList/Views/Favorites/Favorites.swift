@@ -39,26 +39,21 @@ struct Favorites: View {
         .padding(.bottom, 20)
         .navigationBarBackButtonHidden(true)
         .onAppear {
-//            for movie in favorites {
-//                print("Title: \(movie.originalTitle ?? "No Title")")
-//                print("Poster Path: \(movie.posterPath ?? "No Poster Path")")
-//            }
-            
             favList = favorites.map { movie in
                 MovieResults(
                     id: Int(movie.id),
-                    adult: nil,
-                    backdropPath: nil,
-                    originalLanguage: nil,
+                    adult: movie.adult,
+                    backdropPath: movie.backdropPath,
+                    originalLanguage: movie.originalLanguage,
                     originalTitle: movie.originalTitle,
-                    overview: nil,
-                    popularity: nil,
+                    overview: movie.overview,
+                    popularity: movie.popularity,
                     posterPath: movie.posterPath,
-                    releaseDate: nil,
+                    releaseDate: movie.releaseDate,
                     title: movie.originalTitle,
-                    video: nil,
-                    voteAverage: nil,
-                    voteCount: nil
+                    video: movie.video,
+                    voteAverage: movie.voteAverage,
+                    voteCount: Int(movie.voteCount)
                 )
             }
             

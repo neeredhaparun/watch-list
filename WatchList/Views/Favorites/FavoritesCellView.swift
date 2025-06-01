@@ -10,15 +10,28 @@ import SwiftUI
 struct FavoritesCellView: View {
     
     @State var movieDetails: MovieResults
+    @State var moviePosterPath: String = ""
     
     var body: some View {
         ZStack(alignment: .leading) {
             HStack(alignment: .center){
-                Image("dummyMovie")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 150)
-                    .cornerRadius(10)
+//                Image("dummyMovie")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(height: 150)
+//                    .cornerRadius(10)
+                
+                AsyncImage(url: URL(string: "\(API.imageBaseURL)\(moviePosterPath)")) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 200)
+                        .cornerRadius(10)
+                } placeholder: {
+                    ProgressView()
+                        .frame(width: 100, height: 200)// or any placeholder view
+                }
+                
                 VStack(alignment: .leading){
                     Text(movieDetails.originalTitle ?? "")
                         .font(.title2)
@@ -46,7 +59,7 @@ struct FavoritesCellView: View {
         .cornerRadius(10)
         .shadow(radius: 5)
         .onAppear {
-            print("adfsadsads ==== \(movieDetails)")
+            moviePosterPath = movieDetails.posterPath ?? ""
         }
     }
 }
