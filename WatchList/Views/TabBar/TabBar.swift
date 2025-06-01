@@ -18,10 +18,6 @@ struct TabBar: View {
         ZStack{
             VStack{
                 TabView(selection: $selectedTab) {
-//                    NavigationView{
-//                        Home()
-//                            .tag(Tab.house)
-//                    }
                     NavigationView {
                         Home()
                     }

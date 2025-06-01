@@ -54,6 +54,8 @@ struct MovieDetailsView: View {
                                 .clipShape(Circle())
                         }
                         .padding(.horizontal)
+                        .accessibilityIdentifier("FavoriteButton")
+                        .accessibilityValue(isFavorite ? "true" : "false")
 
                     }
                     
@@ -99,24 +101,10 @@ struct MovieDetailsView: View {
                         .font(.title3)
                         .padding(10)
                     
-                    
-                    
-//                                VStack{
-//                                    Text("Genre")
-//                                        .padding(.vertical, 8)
-//                                        .padding(.horizontal)
-//                                }
-//                                .background(.ultraThinMaterial)
-//                                .cornerRadius(20)
-//                                .overlay(
-//                                    RoundedRectangle(cornerRadius: 20)
-//                                        .stroke(Color.black, lineWidth: 2)
-//                                )
-//                                .padding(10)
-                    
                     Spacer()
                 }
             }
+            .accessibilityIdentifier("MovieDetailsView")
             
             HStack {
                 Button(action: {
@@ -134,6 +122,7 @@ struct MovieDetailsView: View {
             .padding(.leading)
             .padding(.top, 50)
         }
+        .padding(.bottom, 20)
         .edgesIgnoringSafeArea(.top)
         .navigationBarBackButtonHidden(true)
         .onAppear {

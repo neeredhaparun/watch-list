@@ -8,6 +8,12 @@
 import Foundation
 
 class MovieService {
+    
+    private let session: URLSession
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+    
     func fetchPopularMovies(completion: @escaping (Result<[MovieResults], Error>) -> Void) {
 //        let apiKey = "4d8e40b05d6eb0cbb8f034fc787ca34a"
         let urlString = "\(API.baseURL)/discover/movie?sort_by=popularity.desc&api_key=\(API.apiKey)"
@@ -16,7 +22,7 @@ class MovieService {
             return
         }
         
-        URLSession.shared.dataTask(with: url) { data, _, error in
+        session.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion(.failure(error))
                 return

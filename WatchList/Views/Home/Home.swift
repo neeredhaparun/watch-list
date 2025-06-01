@@ -56,6 +56,9 @@ struct Home: View {
                     ForEach(filteredMovies) { movie in
                         NavigationLink(destination: MovieDetailsView(movieDetails: movie)) {
                             HomeCellView(movieDetails: movie)
+                                .accessibilityElement(children: .combine)
+                                .accessibilityIdentifier("movie_\(movie.id)")
+                                
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
@@ -63,6 +66,7 @@ struct Home: View {
                 .padding(.horizontal, 15)
                 .padding(.vertical, 10)
             }
+            .accessibilityIdentifier("HomeScrollView")
         }
         .padding(.bottom, 20)
         .onAppear {

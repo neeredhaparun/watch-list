@@ -29,6 +29,7 @@ struct CustomTabBar: View {
                             }
                             
                         }
+                        .accessibilityIdentifier("\(tab.rawValue)_tab")
                     Spacer()
                 }
             }
